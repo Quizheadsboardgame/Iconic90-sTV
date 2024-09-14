@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iconic 90's TV Quiz</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Baloo 2', sans-serif;
+            background-color: #38B6FF; /* Background color */
+            color: black;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        #yellow-box {
+            width: 200px;
+            height: 200px;
+            background-color: #FED405; /* Yellow color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+            border: 5px solid black; /* Black edging */
+            transition: transform 0.1s ease-in-out;
+        }
+
+        #question-answer {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Keyframes for the bounce animation */
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Class to trigger the bounce animation */
+        .animate-bounce {
+            animation: bounce 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="yellow-box">ICONIC 90'S TV</div>
+
+    <div id="question-answer"></div>
+
+    <script>
+        const yellowBox = document.getElementById("yellow-box");
+        const questionAnswerDiv = document.getElementById("question-answer");
+
+        // Array of iconic 90's TV trivia questions and answers
+        const iconic90sTvQuestions = [
+            { question: "Which TV show features a group of friends including Ross, Rachel, and Chandler?", answer: "Friends" },
+            { question: "What TV series features a family of aliens living in a suburban neighborhood and includes the character ALF?", answer: "ALF" },
+            { question: "Which TV show, set in the 1990s, is about a high school teacher and his students dealing with real-life issues?", answer: "Saved by the Bell" },
+            { question: "What TV series features a superhero in a red and yellow costume who fights crime in the fictional city of Central City?", answer: "The Flash" },
+            { question: "Which 90's TV show features a high school principal who is also a struggling stand-up comedian?", answer: "The Hughleys" },
+            { question: "What 1990s TV show is set in the fictional town of Twin Peaks and involves a mysterious murder investigation?", answer: "Twin Peaks" },
+            { question: "Which TV series features a teenage witch with magical powers and her talking cat, Salem?", answer: "Sabrina the Teenage Witch" },
+            { question: "What TV show follows the adventures of a young girl named Clarissa who often breaks the fourth wall?", answer: "Clarissa Explains It All" },
+            { question: "Which 90's TV drama follows the lives of four high school friends in the fictional town of Bayside?", answer: "Saved by the Bell" },
+            { question: "What TV show features a single father raising his three daughters with the help of his best friend, Joey?", answer: "Full House" },
+            { question: "Which 1990's sitcom revolves around the dysfunctional family of Roseanne Conner and her family?", answer: "Roseanne" },
+            { question: "What TV series features a young woman named Xena who is a warrior princess in ancient Greece?", answer: "Xena: Warrior Princess" },
+            { question: "Which TV show follows the life of a young man who becomes a successful businessman after inventing a new technology?", answer: "The Fresh Prince of Bel-Air" },
+            { question: "What TV show is set in a fictional high school and follows the lives of the students and their teachers?", answer: "Beverly Hills, 90210" },
+            { question: "Which 1990's TV show features a group of friends who hang out in a coffee shop called Central Perk?", answer: "Friends" },
+            { question: "What TV show features a family of superheroes, including the character Timmy Turner who wishes for magical powers?", answer: "The Fairly OddParents" },
+            { question: "Which 1990's TV show involves a group of people who have been abducted by aliens and are trying to uncover the truth about their abduction?", answer: "The X-Files" },
+            { question: "What TV series follows the lives of a group of teens living in a beach town in California?", answer: "Baywatch" },
+            { question: "Which TV show features a young girl who is adopted by a wealthy family and learns about her past?", answer: "The Wonder Years" },
+            { question: "What TV show involves a group of detectives solving crimes in a fictional city called Metropolis?", answer: "Lois & Clark: The New Adventures of Superman" },
+            { question: "Which 90's TV show follows the lives of a group of high school students living in the fictional town of Jericho?", answer: "Buffy the Vampire Slayer" },
+            { question: "What TV show features a group of young adults who work at a coffee shop in Seattle?", answer: "Friends" },
+            { question: "Which 1990's TV show involves a group of alien hunters who fight to protect Earth from extraterrestrial threats?", answer: "The X-Files" },
+            { question: "What TV show is set in the fictional town of Springfield and features a family including Homer, Marge, Bart, Lisa, and Maggie?", answer: "The Simpsons" },
+            { question: "Which 90's TV show features a talking horse who is a former TV star and his struggles in modern life?", answer: "Mr. Ed" },
+            { question: "What TV series follows the life of a teenage girl who is a junior at a high school and has a secret identity as a superhero?", answer: "Sabrina the Teenage Witch" },
+            { question: "Which 1990's TV show features a young woman who is a witch and attends a magical academy?", answer: "Charmed" },
+            { question: "What TV show involves a group of friends who live together in a loft apartment in New York City?", answer: "Friends" },
+            { question: "Which 90's TV series features a teenage girl who is a secret agent for a top-secret government organization?", answer: "Get Smart" },
+            { question: "What TV show follows a group of young adults living in a fictional college dormitory?", answer: "Saved by the Bell: The College Years" },
+            { question: "Which 1990's TV show features a young man with supernatural powers who must fight against evil forces?", answer: "Power Rangers" },
+            { question: "What TV series is set in the fictional town of Capeside and follows the lives of teenagers and their families?", answer: "Dawson's Creek" },
+            { question: "Which 90's TV show features a young man who becomes a crime-fighting superhero with the help of a high-tech suit?", answer: "The Flash" },
+            { question: "What TV show features a group of young adults living in a shared apartment and dealing with their personal and professional lives?", answer: "Friends" },
+            { question: "Which 1990's TV show follows the lives of a group of friends living in a fictional city called Baltimore?", answer: "The Wire" },
+            { question: "What TV series features a family of witches who must protect their magical powers from evil forces?", answer: "Charmed" },
+            { question: "Which 1990's TV show features a group of people who have been sent back in time to prevent historical disasters?", answer: "Quantum Leap" },
+            { question: "What TV show involves a group of friends who live in a fictional apartment building and navigate their relationships and careers?", answer: "Friends" },
+            { question: "Which 90's TV series features a group of detectives solving crimes in the fictional city of Miami?", answer: "Miami Vice" },
+            { question: "What TV show follows the adventures of a young woman who is a witch and her friends in the fictional town of Sunnydale?", answer: "Buffy the Vampire Slayer" },
+            { question: "Which 1990's TV show features a group of teenagers who discover they have superpowers and must protect their city from evil?", answer: "Power Rangers" },
+            { question: "What TV series is set in a fictional high school and follows the lives of students and teachers dealing with various issues?", answer: "Beverly Hills, 90210" },
+            { question: "Which 1990's TV show features a young man with the ability to communicate with animals and must use his powers to help people?", answer: "Dr. Dolittle" },
+            { question: "What TV show involves a group of friends who live in a fictional city and work together to solve mysteries?", answer: "Friends" },
+            { question: "Which 90's TV series features a family of superheroes who must balance their normal lives with their crime-fighting activities?", answer: "The Incredibles" },
+            { question: "What TV series is set in a fictional town and follows a young girl who becomes a hero after discovering her magical powers?", answer: "Sabrina the Teenage Witch" },
+            { question: "Which 1990's TV show features a group of young adults who work at a coffee shop and navigate their relationships and careers?", answer: "Friends" },
+            { question: "What TV show follows a group of friends who are all detectives working together to solve crimes in a fictional city?", answer: "The X-Files" },
+            { question: "Which 90's TV show features a young man who gains superpowers and must protect his city from evil forces?", answer: "The Flash" },
+            { question: "What TV series involves a group of friends who live in a fictional city and have adventures together?", answer: "Friends" },
+            { question: "Which 1990's TV show features a family of witches who must protect their magical powers from evil threats?", answer: "Charmed" }
+        ];
+
+        let shuffledQuestions = [];
+        let questionIndex = 0;
+
+        // Shuffle the questions array
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        // Initialize questions
+        function initializeQuestions() {
+            shuffledQuestions = shuffleArray([...iconic90sTvQuestions]);
+            questionIndex = 0;
+            displayQuestion();
+        }
+
+        // Function to display the current question
+        function displayQuestion() {
+            if (shuffledQuestions.length === 0) {
+                questionAnswerDiv.innerHTML = "<strong>No more questions!</strong>";
+                return;
+            }
+            const currentQA = shuffledQuestions[questionIndex];
+            questionAnswerDiv.innerHTML = `<strong>Question:</strong> ${currentQA.question}<br><strong>Answer:</strong> ${currentQA.answer}`;
+        }
+
+        // Bounce animation on click
+        yellowBox.addEventListener("click", () => {
+            yellowBox.classList.add("animate-bounce");
+            setTimeout(() => {
+                yellowBox.classList.remove("animate-bounce");
+            }, 300);
+            questionIndex = (questionIndex + 1) % shuffledQuestions.length;
+            displayQuestion();
+        });
+
+        // Initialize the quiz
+        initializeQuestions();
+    </script>
+
+</body>
+</html>
